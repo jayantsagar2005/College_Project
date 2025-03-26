@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 
 public class ConnectionFactory {
 	
-	private static String url = "jdbc:mysql://localhost:3306/restro";
+	private static String url = "jdbc:mysql://mysql.railway.internal:3306/railway";
 	private static String username = "root";
-	private static String password = "Jayant@2005";
+	private static String password = "cZscyPbnjzFSgzhoMeGJOWvKudoPpPWi";
 	private static String driverClassName = "com.mysql.cj.jdbc.Driver";
 	private static Connection conn;
 	

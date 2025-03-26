@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+		body{
+			background: linear-gradient(45deg, red, blue);
+		}
+		.counter {
+            font-size: 0.9em;
+            color: #000;
+        }
+    	.input-group {
+        	margin-bottom: 15px;
+    	}
+		.container{
+        	display:flex;
+        	justify-content:center;
+        	align-item:center;
+        	height: 400px;
+        	width:450px;
+        	margin-left:35%;
+        	margin-top:1%;
+        	
+        }
+        form{
+        	margin-top:20px;
+        }
+        input{
+        	width:300px;
+        	height:30px;
+        	border: 2.5px solid black;
+        	margin-top:15px;
+        }
+        textarea{
+        	width:300px;
+        	height:80px;
+        	margin-top:15px;
+        	border: 2.5px solid black;
+        }
+        button{
+        	width:100px;
+        	height:35px;
+        	color: white;
+    		background-color: black;
+    		border: 2.5px solid black;
+    		border-radius: 8px;
+    		margin-top:10px;
+    		margin-left:100px;
+        }
+        button:hover{
+        	cursor: pointer;
+        	color: black;
+    		background-color: white;
+        }
+        label{
+        	font-weight: bolder;
+    		color: black;
+    		margin-top:20px;
+        }

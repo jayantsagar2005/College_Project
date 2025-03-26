@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+body{
+	height : 100%;
+	width: 100%;
+}
+
+.back-color{
+	background-color: #FEA116;
+}
+
+.back-colors{
+	background-color: #0F172B;
+}
+
+.header{
+	background-color: #0F172B;
+	padding-top: 10px;
+}
+
+.font-color{
+	color: #FEA116;
+}
+
+.circle{
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    background: linear-gradient(to right, #ffffff22, #FEA116);
+    position: absolute;
+}
+
+.c1{
+    top: 230px;
+    left: 80px;
+}
+
+.c2{
+    bottom: 70px;
+    right: 100px;
+}
+
+#iconname{
+	width: 340px;
+}
+
+.btn:hover{
+	color: black;
+}

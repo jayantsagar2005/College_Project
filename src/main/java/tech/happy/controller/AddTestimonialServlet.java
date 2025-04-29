@@ -28,6 +28,7 @@ public class AddTestimonialServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		String location = (String) session.getAttribute("location"); 
 		
 		String name = request.getParameter("membername");
 		String occupation = request.getParameter("occupation");
@@ -45,7 +46,7 @@ public class AddTestimonialServlet extends HttpServlet {
         
         if(result.equals("Valid")) {
         	
-        	boolean flag = commentServiceImp.addComment(commentPojo);
+        	boolean flag = commentServiceImp.addComment(commentPojo, location);
         	
         	if(flag) {
         		

@@ -2,14 +2,14 @@
 <%@page import="tech.happy.dao.FoodOrderDaoImp"%>
 <%@page import="tech.happy.model.Admin"%>
 
-<%
+<%-- <%
 	Admin check = (Admin) session.getAttribute("adminlogin");
 
 	if(check == null){
 		response.sendRedirect("adminlogin.jsp");
 		return;
 	}
-%>
+%> --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -19,15 +19,26 @@
 		<meta charset="UTF-8">
 		<title>Add Testimonial</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link href="css/admin.css" rel="stylesheet">
 	</head>
 	<body>
 	
-		<div class="back-colors py-4">
-			<div class="text-center">
-				<h1 class="fw-bolder font-color">ADD TESTIMONIAL</h1>
-			</div>
-		</div>
+		<header class="back-colors py-4 d-flex justify-content-between align-items-center">
+		    <div class="text-center flex-grow-1">
+		        <h1 class="fw-bolder font-color m-0">ADD TESTIMONIAL</h1>           
+		        <h2 class="visually-hidden">
+		            <%@include file="message.jsp" %>             
+		        </h2>
+		    </div>
+		    
+		    <div class="text-end ms-auto">
+		        <h4 id="branchName" class="m-0 text-white me-4">
+		            <i class="fa-solid fa-location-dot mx-2"></i>
+		            <%= (String) session.getAttribute("location") != null ? session.getAttribute("location") : "Location not set" %>
+		        </h4>
+		    </div>
+		</header>
 	
 		
 		<div class="bg-secondary d-flex justify-content-center align-items-center mt-1">
@@ -98,8 +109,6 @@
 					  	<label for="memberimage" class="form-label mx-2 fw-bolder fs-5">Image</label>
 					  	<input type="file" class="form-control-file" accept="image/*" id="memberimage" name="memberimage">
 					  </div>
-					  
-					  <h3 style="text-align:center;"><%@include file="message.jsp" %></h3>
 					  
 					  <div class="text-center">
 					  	<button type="submit" class="btn back-color my-2 fs-5 fw-bolder">Add Testimonial</button>

@@ -23,10 +23,11 @@ public class ReadServiceModuleServlet extends HttpServlet {
 		HttpSession httpSession = request.getSession();
 		
 		httpSession.setAttribute("check", "FromServlet");
+		String location = (String) httpSession.getAttribute("location"); 
 		
 		try {
 			ServiceModuleServiceImp serviceImp = new ServiceModuleServiceImp();
-			ArrayList<ServicePojo> list = serviceImp.readService();
+			ArrayList<ServicePojo> list = serviceImp.readService(location);
 			
 			if(list == null) {
 				

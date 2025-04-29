@@ -5,7 +5,7 @@
 <%@page import="tech.happy.dao.ContactDaoImp"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="tech.happy.model.ContactPojo"%>
-<%@page import="tech.happy.dao.FoodOrderDaoImp"%>
+<%@page import="tech.happy.dao.OrderDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="tech.happy.model.Admin"%>
 
@@ -17,7 +17,7 @@
 		return;
 	}
 	CommentDaoImp commentDaoImp = new CommentDaoImp();
-	FoodOrderDaoImp foodOrderDaoImp = new FoodOrderDaoImp();
+	OrderDao foodOrderDaoImp = new OrderDao();
 	ContactDaoImp contact = new ContactDaoImp();
 %>
 
@@ -29,16 +29,26 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <title>Read Testimonial</title>
 	    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link href="css/admin.css" rel="stylesheet">
 	</head>
 	<body>
 		<div>
-			<div class="back-colors py-4">
-				<div class="text-center">
-					<h1 class="fw-bolder font-color">READ TESTIMONIAL</h1>
-			    	<h2 class="d-none"><%@include file="message.jsp" %></h2>
-				</div>
-			</div>
+			<header class="back-colors py-4 d-flex justify-content-between align-items-center">
+			    <div class="text-center flex-grow-1">
+			        <h1 class="fw-bolder font-color m-0">READ TESTIMONIALS</h1>           
+			        <h2 class="visually-hidden">
+			            <%@include file="message.jsp" %>             
+			        </h2>
+			    </div>
+			    
+			    <div class="text-end ms-auto">
+			        <h4 id="branchName" class="m-0 text-white me-4">
+			            <i class="fa-solid fa-location-dot mx-2"></i>
+			            <%= (String) session.getAttribute("location") != null ? session.getAttribute("location") : "Location not set" %>
+			        </h4>
+			    </div>
+			</header>
 	
 			<nav class="navbar navbar-expand-lg navbar-light back-colors mt-1">
 			  <div class="container-fluid">
@@ -48,31 +58,31 @@
 			    </button>
 			    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-			        <li class="nav-item">
+			        <li class="nav-item d-flex align-items-center">
 			          <a class="nav-link fs-5 fw-bolder text-white" aria-current="page" href="admin.jsp">Home</a>
 			        </li>
 			        <%		
-			        	int pendingOrder = foodOrderDaoImp.pendingOrder();
+			        	int pendingOrder = foodOrderDaoImp.pendingOrder((String) session.getAttribute("location"));
 			        %>
-			        <li class="nav-item">		
-			          <a class="nav-link fs-5 fw-bolder text-white" href="readorder.jsp">Read Ordered (<%= pendingOrder %>)</a>
+			        <li class="nav-item d-flex align-items-center">		
+			          <a class="nav-link fs-5 fw-bolder text-white text-center" href="readorder.jsp">Read Ordered (<%= pendingOrder %>)</a>
 			        </li>
 			        
-			        <li class="nav-item">
-			          <a class="nav-link fs-5 fw-bolder text-white" href="ReadMessageServlet">Read Message (<%= contact.unreadCount() %>)</a>
+			        <li class="nav-item d-flex align-items-center">
+			          <a class="nav-link fs-5 fw-bolder text-white text-center" href="ReadMessageServlet">Read Message (<%= contact.unreadCount((String) session.getAttribute("location")) %>)</a>
 			        </li>
 			        
-			        <li class="nav-item">		
-			          <a class="nav-link fs-5 fw-bolder text-warning" href="readtestimonial.jsp">Read Testimonial (<%= commentDaoImp.pendingCount() %>)</a>
+			        <li class="nav-item d-flex align-items-center">		
+			          <a class="nav-link fs-5 fw-bolder text-warning text-center" href="readtestimonial.jsp">Read Testimonial (<%= commentDaoImp.pendingCount((String) session.getAttribute("location")) %>)</a>
 			        </li>
 		        
-			        <li class="nav-item dropdown">
-			       	  <a class="nav-link fs-5 dropdown-toggle fw-bolder text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			        <li class="nav-item dropdown d-flex align-items-center">
+			       	  <a class="nav-link fs-5 dropdown-toggle fw-bolder text-white text-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 				      	Manage 
 				      </a>
 				      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 			            <li><a class="dropdown-item fw-bolder" href="addservice.jsp">Add Service</a></li>
-			            <li><a class="dropdown-item fw-bolder" href="ReadServiceServlet">Read Services</a></li>
+			            <li><a class="dropdown-item fw-bolder" href="readservice.jsp">Read Services</a></li>
 			            <li><hr class="dropdown-divider"></li>
 			          	<li><a class="dropdown-item fw-bolder" href="additem.jsp">Add Food</a></li>
 			            <li><a class="dropdown-item fw-bolder" href="readitem.jsp">Read Foods</a></li>
@@ -82,70 +92,73 @@
 			          </ul>			      		      
 			       </li>
 			      </ul>
-			      <form class="d-flex">
-			      	<a href="changepassword.jsp" class="btn btn-outline-dark bg-white font-color mx-3 fw-bolder">Change Password</a>
-			        <a href="LogoutServlet" class="btn btn-outline-dark bg-white mx-2 font-color fw-bolder">LogOut</a>
+			      <form class="d-flex flex-wrap gap-2 justify-content-center">
+			      	<a href="changepassword.jsp" class="btn btn-outline-dark bg-white font-color fw-bolder">Change Password</a>
+			        <a href="LogoutServlet" class="btn btn-outline-dark bg-white font-color fw-bolder text-center">LogOut</a>
 			      </form>
 			    </div>
 			  </div>
 			</nav>
 		
 			<div class="mt-2">
-				<table class="table table-secondary table-bordered">
-		    		<thead>
-						<tr class="table-warning">
-						    <th scope="col" class="text-center fs-4 fw-bolder" style="width:8%">Image</th>
-						    <th scope="col" class="text-center fs-4 fw-bolder" style="width:10%">Name</th>
-						    <th scope="col" class="text-center fs-4 fw-bolder">Occupation</th>
-						    <th scope="col" class="text-center fs-4 fw-bolder">Comment</th>
-						    <th scope="col" class="text-center fs-4 fw-bolder">DateTime</th>
-						    <th scope="col" class="text-center fs-4 fw-bolder">Status</th>
-						    <th scope="col" class="text-center fs-4 fw-bolder">Action</th>
-						</tr>
-					</thead>
-				<%
-			    	ArrayList<CommentPojo> list = commentDaoImp.readComment();
-			    	for(CommentPojo cp : list){
-			    %>
-			    		<tbody>
-			    			<tr class="table-success">
-			    				<td class="pt-3 text-center"><img class="img-fluid flex-shrink-0 rounded-circle" src="CommentImages/<%= cp.getImage() %>" style="width: 50px; height: 50px;"></td>		    				
-			    				<td class="pt-3"><%= cp.getName() %></td>
-			    				<td class="pt-3"><%= cp.getOccupation() %></td>
-			    				<td class="pt-3"><%= cp.getComment() %></td>
-			    				<td class="pt-3"><%= cp.getDateTime() %></td>
-			    				<td class="pt-3 fw-bolder"><%= cp.getStatus() %></td>
-			    				<td style="width: 180px;">
-			    					<div class="d-flex">
-			    						<form action="DeleteCommentServlet" method="post">
-							    			<input type="hidden" name="sno" value="<%= cp.getsNo() %>">
-							    			<button class="btn btn-primary fw-bolder">Delete</button>
-							    		</form>
-							    		<form action="UpdateCommentServlet" method="post" class="ms-2">
-							    			<input type="hidden" name="sno" value="<%= cp.getsNo() %>">
-							    			<%
-							    				if(cp.getStatus().equals("Pending")){
-							    			%>			
-							    					<button class="btn bg-warning fw-bolder"><%= cp.getStatus() %></button>
-							    			<% 
-							    				}else{
-							    			%>		
-							    					<button class="btn bg-success fw-bolder"><%= cp.getStatus() %></button>
-							    			<%
-							    				}
-							    			%>	    			
-							    		</form>
-			    					</div>
-			    				</td>
-			    			</tr>
-			    		</tbody>
-			    <%
-			    	}
-			    %>
-			    </table>
-			</div>	
-		</div>
-	
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+			    <div class="table-responsive">
+			        <table class="table table-secondary table-bordered">
+			            <thead>
+			                <tr class="table-warning">
+			                    <th scope="col" class="text-center fs-4 fw-bolder" style="min-width: 100px;">Image</th>
+			                    <th scope="col" class="text-center fs-4 fw-bolder" style="min-width: 120px;">Name</th>
+			                    <th scope="col" class="text-center fs-4 fw-bolder" style="min-width: 140px;">Occupation</th>
+			                    <th scope="col" class="text-center fs-4 fw-bolder" style="min-width: 250px;">Comment</th>
+			                    <th scope="col" class="text-center fs-4 fw-bolder" style="min-width: 180px;">DateTime</th>
+			                    <th scope="col" class="text-center fs-4 fw-bolder" style="min-width: 100px;">Status</th>
+			                    <th scope="col" class="text-center fs-4 fw-bolder" style="min-width: 200px;">Action</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <%
+			                    ArrayList<CommentPojo> list = commentDaoImp.readComment((String) session.getAttribute("location"));
+			                    for(CommentPojo cp : list){
+			                %>
+			                <tr class="table-success align-middle">
+			                    <td class="text-center">
+			                        <img class="img-fluid rounded-circle" src="CommentImages/<%= cp.getImage() %>" style="width: 50px; height: 50px;">
+			                    </td>
+			                    <td><%= cp.getName() %></td>
+			                    <td><%= cp.getOccupation() %></td>
+			                    <td><%= cp.getComment() %></td>
+			                    <td><%= cp.getDateTime() %></td>
+			                    <td class="fw-bolder"><%= cp.getStatus() %></td>
+			                    <td>
+			                        <div class="d-flex flex-wrap gap-2">
+			                            <form action="DeleteCommentServlet" method="post">
+			                                <input type="hidden" name="sno" value="<%= cp.getsNo() %>">
+			                                <button class="btn btn-primary fw-bolder">Delete</button>
+			                            </form>
+			                            <form action="UpdateCommentServlet" method="post">
+			                                <input type="hidden" name="sno" value="<%= cp.getsNo() %>">
+			                                <%
+			                                    if(cp.getStatus().equals("Pending")){
+			                                %>			
+			                                        <button class="btn bg-warning fw-bolder"><%= cp.getStatus() %></button>
+			                                <% 
+			                                    } else {
+			                                %>		
+			                                        <button class="btn bg-success fw-bolder"><%= cp.getStatus() %></button>
+			                                <%
+			                                    }
+			                                %>	    			
+			                            </form>
+			                        </div>
+			                    </td>
+			                </tr>
+			                <%
+			                    }
+			                %>
+			            </tbody>
+			        </table>
+			    </div>
+			</div>
+		</div>	
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	</body>
 </html>

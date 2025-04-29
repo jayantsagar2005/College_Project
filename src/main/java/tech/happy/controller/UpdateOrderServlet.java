@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import tech.happy.dao.FoodOrderDaoImp;
+import tech.happy.dao.OrderDao;
 
 import java.io.IOException;
 
@@ -20,8 +20,8 @@ public class UpdateOrderServlet extends HttpServlet {
 		
 		int sno = Integer.parseInt(request.getParameter("sno")); 
 		
-		FoodOrderDaoImp foodOrderDaoImp = new FoodOrderDaoImp();
-		boolean flag = foodOrderDaoImp.updateStatus(sno);
+		OrderDao orderDao = new OrderDao();
+		boolean flag = orderDao.updateStatus(sno);
 		
 		if(flag) {
 			String msg = "Updated Successfully!";
@@ -31,8 +31,7 @@ public class UpdateOrderServlet extends HttpServlet {
 			session.setAttribute("msg", msg);
 		}
 		
-		response.sendRedirect("readorder.jsp");
-		
+		response.sendRedirect("readorder.jsp");	
 	}
 
 }

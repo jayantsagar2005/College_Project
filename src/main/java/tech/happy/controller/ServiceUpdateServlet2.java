@@ -23,7 +23,7 @@ public class ServiceUpdateServlet2 extends HttpServlet {
 			
 			
 			String sno = request.getParameter("sn");
-			String icon = request.getParameter("icon"); 
+			String icon = request.getParameter("iconname"); 
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");
 

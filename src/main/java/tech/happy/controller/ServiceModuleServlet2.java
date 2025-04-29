@@ -24,10 +24,12 @@ public class ServiceModuleServlet2 extends HttpServlet {
 		
 		HttpSession httpSession = request.getSession(); 
 		
+		String location = (String) httpSession.getAttribute("location");
+		
 		try {
 			
 			ServiceModuleServiceImp serviceImp = new ServiceModuleServiceImp();
-			result = serviceImp.addService(iconname, title, description); 
+			result = serviceImp.addService(iconname, title, description, location); 
 			
 			httpSession.setAttribute("msg", result);
 			response.sendRedirect("addservice.jsp"); 

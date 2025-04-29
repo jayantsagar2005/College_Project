@@ -22,6 +22,7 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -50,7 +51,11 @@
         	<div class="container-fluid position-relative p-0">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
 				    <a href="" class="navbar-brand p-0">
-				    	<h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>
+				    	<h1 class="text-primary m-2"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>	    	
+				    	<p id="branchName">
+						    <i class="fa-solid fa-location-dot mx-2"></i>
+						    <%= (String) session.getAttribute("location") != null ? session.getAttribute("location") : "Location not set" %>
+						</p>
 				    </a>
 				    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 				    	<span class="fa fa-bars"></span>
@@ -101,12 +106,12 @@
                 <div class="row g-4">
                 	<%
                 		TeamDaoImp dao = new TeamDaoImp();
-                		ArrayList<TeamPojo> list = dao.getMember();
+                		ArrayList<TeamPojo> list = dao.getMember((String)session.getAttribute("location"));
                 		if(list.size() != 0){
                 			for(int i=0; i<list.size(); i++){	
                 	%>
 		                    	<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-			                        <div class="team-item text-center rounded overflow-hidden">
+			                        <div class="team-item text-center rounded-3 overflow-hidden">
 			                            <div class="rounded-circle overflow-hidden m-4">
 			                            	<%
 			                            		if(list.get(i).getMemberImage().isEmpty()){
@@ -133,7 +138,7 @@
                 			}
                 		}else{
 	                %>
-	                		<h3>Present time not work any member</h3>
+	                		<h3 class="text-center">Present time not work any member</h3>
 	                <%
                 		}
 	                %>

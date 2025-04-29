@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 
@@ -31,7 +32,7 @@ public class AddItemServlet extends HttpServlet {
 		String itemName = request.getParameter("itemname");
 		String itemContent = request.getParameter("itemcontent");
 		int itemPrice = Integer.parseInt(request.getParameter("itemprice"));
-        
+        String location = (String) session.getAttribute("location");
         
         Part filePart = request.getPart("itemimage");
         String itemImage = getFileName(filePart);
@@ -41,12 +42,15 @@ public class AddItemServlet extends HttpServlet {
 
 		
 		if(result.equals("Valid")) {
-			boolean flag = addItemServiceImp.addItem(dayTime, itemName, itemContent, itemPrice, itemImage);
+			boolean flag = addItemServiceImp.addItem(dayTime, itemName, itemContent, itemPrice, itemImage, location);
 			
 			if(flag) { 
 				
 					String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
-		        
+					
+				//	System.out.println(uploadPath);	
+				//	Path = C:\Users\hp\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\RestaurantApp\\images
+					
 			        File uploadDir = new File(uploadPath);
 			        if (!uploadDir.exists()) { 
 			            uploadDir.mkdir();

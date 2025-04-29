@@ -22,7 +22,8 @@
     <!-- Icon Font Style Sheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <!-- Libraries Style Sheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -50,7 +51,11 @@
         	<div class="container-fluid position-relative p-0">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
 				    <a href="" class="navbar-brand p-0">
-				    	<h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>
+				    	<h1 class="text-primary m-2"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>	    	
+				    	<p id="branchName">
+						    <i class="fa-solid fa-location-dot mx-2"></i>
+						    <%= (String) session.getAttribute("location") != null ? session.getAttribute("location") : "Location not set" %>
+						</p>
 				    </a>
 				    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 				    	<span class="fa fa-bars"></span>
@@ -98,16 +103,16 @@
                     <div class="col-lg-6">
                         <div class="row g-3">
                             <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="img/about-1.jpg">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="img/download (3).png">
                             </div>
                             <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="img/about-2.jpg" style="margin-top: 25%;">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="img/download (2).png" style="margin-top: 25%;">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="img/about-3.jpg">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="img/download (1).png">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="img/about-4.jpg">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="img/download (4).png">
                             </div>
                         </div>
                     </div>
@@ -153,7 +158,7 @@
                 <div class="row g-4">
                 	<%
                 		TeamDaoImp dao = new TeamDaoImp();
-                		ArrayList<TeamPojo> teamList = dao.fourMember();
+                		ArrayList<TeamPojo> teamList = dao.fourMember((String) session.getAttribute("location"));
                 		if(teamList.size() != 0){
                 			for(int i=0; i<teamList.size(); i++){	
                 	%>
@@ -185,7 +190,7 @@
                 			}
                 		}else{
 	                %>
-	                		<h3>Present time not work any member</h3>
+	                		<h3 class="text-center">Present time not work any member</h3>
 	                <%
                 		}
 	                %>                  

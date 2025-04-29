@@ -14,12 +14,12 @@ public class ServiceDaoImp implements ServiceDao {
 	private static Connection conn;
 	
 	@Override
-	public String saveService(String iconname, String title, String descrition, String dateTime) {
+	public String saveService(String iconname, String title, String descrition, String dateTime, String location) {
 		try {
 			
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "insert into service(Iconname, Title, Description, DateTime) values (?, ?, ?, ?)";
+			String query = "insert into service(Iconname, Title, Description, DateTime, Location) values (?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
 			
@@ -27,6 +27,7 @@ public class ServiceDaoImp implements ServiceDao {
 			preparedStatement.setString(2, title);
 			preparedStatement.setString(3, descrition); 
 			preparedStatement.setString(4, dateTime);
+			preparedStatement.setString(5, location); 
 			
 			int executeUpdate = preparedStatement.executeUpdate();
 			
@@ -54,7 +55,7 @@ public class ServiceDaoImp implements ServiceDao {
 	
 	
 	@Override
-	public ArrayList<ServicePojo> readService() {
+	public ArrayList<ServicePojo> readService(String locatiion) {
 		
 		ArrayList<ServicePojo> list = new ArrayList<ServicePojo>(); 
 		
@@ -62,17 +63,14 @@ public class ServiceDaoImp implements ServiceDao {
 			
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "select* from service";
+			String query = "select* from service where Location = ?";
 			
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
-			ResultSet resultSet =  preparedStatement.executeQuery();
+			preparedStatement.setString(1, locatiion);
+			ResultSet resultSet =  preparedStatement.executeQuery();		
 			
-			if(!resultSet.next()) {
-				list.add(new ServicePojo(0, "ne", "ne", "ne", "ne"));
-			}else {
-				do {
-					list.add(new ServicePojo(resultSet.getInt("S_No"), resultSet.getString("Iconname"), resultSet.getString("Title"), resultSet.getString("Description"), resultSet.getString("DateTime")));
-				}while(resultSet.next());
+			while(resultSet.next()) {
+				list.add(new ServicePojo(resultSet.getInt("S_No"), resultSet.getString("Iconname"), resultSet.getString("Title"), resultSet.getString("Description"), resultSet.getString("DateTime")));
 			}
 			
 		}catch (Exception e) {
@@ -93,7 +91,7 @@ public class ServiceDaoImp implements ServiceDao {
 
 
 	@Override
-	public ArrayList<ServicePojo> readFourService() {
+	public ArrayList<ServicePojo> readFourService(String location) {
 		
 		ArrayList<ServicePojo> list = new ArrayList<ServicePojo>(); 
 		
@@ -101,17 +99,14 @@ public class ServiceDaoImp implements ServiceDao {
 			
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "select* from service LIMIT 4";
+			String query = "select* from service where Location = ? LIMIT 4";
 			
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, location);
 			ResultSet resultSet =  preparedStatement.executeQuery();
 			
-			if(!resultSet.next()) {
-				list.add(new ServicePojo(0, "ne", "ne", "ne", "ne"));
-			}else {
-				do {
-					list.add(new ServicePojo(resultSet.getInt("S_No"), resultSet.getString("Iconname"), resultSet.getString("Title"), resultSet.getString("Description"), resultSet.getString("DateTime")));
-				}while(resultSet.next());
+			while(resultSet.next()) {
+				list.add(new ServicePojo(resultSet.getInt("S_No"), resultSet.getString("Iconname"), resultSet.getString("Title"), resultSet.getString("Description"), resultSet.getString("DateTime")));
 			}
 			
 		}catch (Exception e) {
@@ -221,6 +216,37 @@ public class ServiceDaoImp implements ServiceDao {
 		}
 		
 		return result;
+	}
+	
+	public ServicePojo getService(int sno) {
+		ServicePojo listPojo = null;
+		
+		try {
+			
+			conn = ConnectionFactory.getConnection();			
+			String query = "select* from service where S_No = ?";			
+			PreparedStatement preparedStatement = conn.prepareStatement(query);			
+			preparedStatement.setInt(1, sno);
+			
+			ResultSet resultSet =  preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				listPojo = new ServicePojo(resultSet.getInt("S_No"), resultSet.getString("Iconname"), resultSet.getString("Title"), resultSet.getString("Description"), resultSet.getString("DateTime"));
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return listPojo;
 	}
 
 }

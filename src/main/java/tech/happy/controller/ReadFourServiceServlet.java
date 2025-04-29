@@ -20,12 +20,12 @@ public class ReadFourServiceServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession httpSession = request.getSession();
-		
+		String location = (String) httpSession.getAttribute("location");
 		httpSession.setAttribute("check", "FromServlet");
 		
 		try {
 			ServiceModuleServiceImp serviceImp = new ServiceModuleServiceImp();
-			ArrayList<ServicePojo> list = serviceImp.readFourService();
+			ArrayList<ServicePojo> list = serviceImp.readFourService(location);
 			
 			if(list == null) {
 				

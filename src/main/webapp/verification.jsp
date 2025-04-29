@@ -1,3 +1,4 @@
+<%@page import="tech.happy.dao.AdminDataDao"%>
 <%@page import="tech.happy.model.Admin"%>
 <%
 	Admin check = (Admin) session.getAttribute("adminlogin");
@@ -47,8 +48,12 @@
             </div>
             
           <div class="mt-4">
-            <label class="block text-gray-700 font-bold" for="email">Email Address</label>
-            <input type="email" value="jayantsagar2005@gmail.com" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-orange-500 focus:bg-white focus:outline-none" autofocus autocomplete readonly>
+          	<%
+          		AdminDataDao adminDataDao = new AdminDataDao();
+          		String mail = adminDataDao.getMail((String) session.getAttribute("location"));
+          	%>
+            <label class="block text-gray-700 font-bold" for="email">G-mail Address</label>
+            <input type="email" value="<%= mail %>" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-orange-500 focus:bg-white focus:outline-none" autofocus autocomplete readonly>
           </div>
 
           <div class="">

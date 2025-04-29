@@ -19,13 +19,14 @@ public class ContactServlet2 extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		
+		String location = (String) session.getAttribute("location");
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
 		String subject = req.getParameter("subject");
 		String message = req.getParameter("message");
 		
 		ContactServiceImp contactServiceImp = new ContactServiceImp();
-		result =  contactServiceImp.contactService2(name, email, subject, message);
+		result =  contactServiceImp.contactService2(name, email, subject, message, location);
 		session.setAttribute("msg", result);
 		resp.sendRedirect("contact.jsp"); 
 	}

@@ -25,7 +25,7 @@ public class CommentServiceImp implements CommentService {
 	}
 
 	@Override
-	public boolean addComment(CommentPojo data) {
+	public boolean addComment(CommentPojo data, String location) {
 		
 		boolean flag = false;
 		
@@ -41,7 +41,7 @@ public class CommentServiceImp implements CommentService {
 	        data.setDateTime(dateTime);  
 	        
 	        CommentDaoImp commentDaoImp = new CommentDaoImp();
-	        flag = commentDaoImp.addComment(data);
+	        flag = commentDaoImp.addComment(data, location);
 			
 		}catch (Exception e) {
 			e.printStackTrace();

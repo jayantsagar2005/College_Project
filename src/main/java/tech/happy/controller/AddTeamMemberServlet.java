@@ -32,6 +32,7 @@ public class AddTeamMemberServlet extends HttpServlet {
 		String facebook = request.getParameter("fblink");
 		String twitter = request.getParameter("twitterlink");
 		String instagram = request.getParameter("instalink");
+		String location = (String) session.getAttribute("location");
 		
 		Part filePart = request.getPart("memberimage");
         String memberImage = getFileName(filePart);
@@ -40,9 +41,9 @@ public class AddTeamMemberServlet extends HttpServlet {
         
         TeamServiceImp teamServiceImp = new TeamServiceImp();
         String result = teamServiceImp.validData(dataPojo); 
-        
+                
         if(result.equals("Valid")) {
-        	boolean flag = teamServiceImp.addMember(dataPojo);
+        	boolean flag = teamServiceImp.addMember(dataPojo, location);        	
         	
         	if(flag) {
         		String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
@@ -51,10 +52,10 @@ public class AddTeamMemberServlet extends HttpServlet {
 		        if (!uploadDir.exists()) { 
 		            uploadDir.mkdir();
 		        }
-		        
+		        		        
 		        if (memberImage != null && !memberImage.isEmpty()) {
 		            File file = new File(uploadPath + File.separator + memberImage);
-
+		            
 		            try (InputStream input = filePart.getInputStream()) {
 		                Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		            } catch (IOException e) {

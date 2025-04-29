@@ -33,7 +33,7 @@ public class UpdateItemServlet extends HttpServlet {
 		String item = request.getParameter("sno");			
 		int itemNo = Integer.parseInt(item);
 		
-		 Part filePart = request.getPart("itemimage");
+		Part filePart = request.getPart("itemimage");
         String itemImage = getFileName(filePart); 
         
 		AddItemServiceImp addItemServiceImp = new AddItemServiceImp(); 
@@ -50,7 +50,6 @@ public class UpdateItemServlet extends HttpServlet {
 			        if (!uploadDir.exists()) {
 			            uploadDir.mkdir();
 			        }
-			        
 				
 			        if (itemImage != null && !itemImage.isEmpty()) {
 			            File file = new File(uploadPath + File.separator + itemImage);
@@ -67,10 +66,6 @@ public class UpdateItemServlet extends HttpServlet {
 						session.setAttribute("msg", result);
 						response.sendRedirect("readitem.jsp");
 			        }
-			        
-			        result = "Item Successfully Update!";  
-					session.setAttribute("msg", result);
-					response.sendRedirect("readitem.jsp");
 				
 			}else {
 				result = "Item Not Update!"; 

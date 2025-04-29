@@ -14,13 +14,13 @@ public class ContactDaoImp implements ContactDao {
 	private static Connection conn;
 	
 	@Override
-	public String saveContact(String name, String email, String subject, String message, String dateTime) {
+	public String saveContact(String name, String email, String subject, String message, String dateTime, String location) {
 
 		try {
 			
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "insert into contact(Name, Gmail, Subject, Message, DateTime) values (?, ?, ?, ?, ?)";
+			String query = "insert into contact(Name, Gmail, Subject, Message, DateTime, Location) values (?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
 			
@@ -29,6 +29,7 @@ public class ContactDaoImp implements ContactDao {
 			preparedStatement.setString(3, subject);
 			preparedStatement.setString(4, message);
 			preparedStatement.setString(5, dateTime);
+			preparedStatement.setString(6, location);
 			
 			int executeUpdate = preparedStatement.executeUpdate();
 			
@@ -56,7 +57,7 @@ public class ContactDaoImp implements ContactDao {
 	}
 	
 	@Override
-	public ArrayList<ContactPojo> readContact() {
+	public ArrayList<ContactPojo> readContact(String location) {
 		
 		ArrayList<ContactPojo> list = new ArrayList<ContactPojo>();
 		
@@ -64,9 +65,10 @@ public class ContactDaoImp implements ContactDao {
 			
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "select* from contact order by S_No desc";
+			String query = "select* from contact where Location = ? order by S_No desc";
 			
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, location);
 			ResultSet resultSet =  preparedStatement.executeQuery();
 			
 			if(!resultSet.next()) {
@@ -164,13 +166,14 @@ public class ContactDaoImp implements ContactDao {
 	}
  
 	@Override
-	public int unreadCount() {
+	public int unreadCount(String location) {
 		int n = 0;
 		try {	
 			conn = ConnectionFactory.getConnection();
-			String query = "SELECT COUNT(*) as n FROM contact WHERE Seen = ?";
+			String query = "SELECT COUNT(*) as n FROM contact WHERE Seen = ? and Location = ?";
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, "Unread");
+			statement.setString(2, location);
 			
 			ResultSet resultSet = statement.executeQuery();
 			

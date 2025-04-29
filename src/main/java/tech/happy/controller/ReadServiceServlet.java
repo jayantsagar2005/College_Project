@@ -20,11 +20,11 @@ public class ReadServiceServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ServiceModuleServiceImp serviceImp = new ServiceModuleServiceImp();
-		ArrayList<ServicePojo> serviceList = serviceImp.readService();
-		
 		HttpSession httpSession = request.getSession();
+		String location = (String) httpSession.getAttribute("location");
 		
+		ServiceModuleServiceImp serviceImp = new ServiceModuleServiceImp();
+		ArrayList<ServicePojo> serviceList = serviceImp.readService(location);	
 		
 		if(serviceList == null) {
 			

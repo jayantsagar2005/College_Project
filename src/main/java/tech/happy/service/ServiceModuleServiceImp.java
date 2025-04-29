@@ -31,7 +31,7 @@ public class ServiceModuleServiceImp implements ServiceModuleService {
 	}
 	
 	@Override
-	public String addService(String iconname, String title, String descrition) {
+	public String addService(String iconname, String title, String descrition, String location) {
 		
 		try {
 			String date = LocalDate.now().toString();
@@ -40,7 +40,7 @@ public class ServiceModuleServiceImp implements ServiceModuleService {
 	        String time = now.format(formatter); 
 			
 			ServiceDaoImp serviceDaoImp = new ServiceDaoImp();
-			result = serviceDaoImp.saveService(iconname, title, descrition, date+" "+time); 
+			result = serviceDaoImp.saveService(iconname, title, descrition, date+" "+time, location); 
 			return result;
 			
 		}catch (Exception e) {
@@ -52,13 +52,13 @@ public class ServiceModuleServiceImp implements ServiceModuleService {
 	}
 
 	@Override
-	public ArrayList<ServicePojo> readService() {
+	public ArrayList<ServicePojo> readService(String location) {
 		
 		ArrayList<ServicePojo> list = null;
 		
 		try {
 			ServiceDaoImp serviceDaoImp = new ServiceDaoImp();
-			list = serviceDaoImp.readService();  
+			list = serviceDaoImp.readService(location);  
 			return list;
 			
 		}catch (Exception e) {
@@ -69,12 +69,12 @@ public class ServiceModuleServiceImp implements ServiceModuleService {
 	}
 
 	@Override
-	public ArrayList<ServicePojo> readFourService() {
+	public ArrayList<ServicePojo> readFourService(String location) {
 		ArrayList<ServicePojo> list = null;
 		 
 		try {
 			ServiceDaoImp serviceDaoImp = new ServiceDaoImp();
-			list = serviceDaoImp.readFourService();   
+			list = serviceDaoImp.readFourService(location);   
 			return list;
 			
 		}catch (Exception e) {

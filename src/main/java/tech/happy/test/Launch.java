@@ -11,7 +11,9 @@ public class Launch {
 		
 		CommentDaoImp commentDaoImp = new CommentDaoImp();
 		
-		ArrayList<CommentPojo> list = commentDaoImp.readComment();
+		ArrayList<CommentPojo> list = commentDaoImp.readComment("Amroha");
+		
+		System.out.println(list); 
 		 	
 	}
  

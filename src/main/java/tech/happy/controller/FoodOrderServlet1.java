@@ -31,17 +31,16 @@ public class FoodOrderServlet1 extends HttpServlet {
 		String result = foodOrderServiceImp.validData(data);
 		
 		if(result.equals("Valid")) {
-			boolean flag =  foodOrderServiceImp.savaData(data);
+//			boolean flag =  foodOrderServiceImp.savaData(data);
 			
-			if(flag) {
-				String msg = "Your Special Request Successfully Send!";
-				session.setAttribute("msg", msg);
-				response.sendRedirect("booking.jsp");
-			}else{
-				String msg = "Your Request Failed, Try Later!";
-				session.setAttribute("msg", msg);
-				response.sendRedirect("booking.jsp");
-			}
+			/*
+			 * if(flag) { String msg = "Your Special Request Successfully Send!";
+			 * session.setAttribute("msg", msg); response.sendRedirect("booking.jsp");
+			 * }else{ String msg = "Your Request Failed, Try Later!";
+			 * 
+			 * } session.setAttribute("msg", msg);
+			 */
+			response.sendRedirect("booking.jsp");
 			
 		}else {
 			session.setAttribute("msg", result);

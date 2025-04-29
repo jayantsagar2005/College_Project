@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import tech.happy.dao.AdminDataDao;
+import tech.happy.dao.GetMailLocation;
 import tech.happy.fileio.GenerateOTP;
 import tech.happy.fileio.SendOTP; 
 import tech.happy.model.Admin;
@@ -25,9 +27,13 @@ public class AdminLoginServlet2 extends HttpServlet {
 		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		String location = (String) session.getAttribute("location");
 
 		AdminLoginServiceImp adminLoginServiceImp = new AdminLoginServiceImp();
 		result =  adminLoginServiceImp.adminLoginService2(username, password);
+		
+		AdminDataDao adminDataDao = new AdminDataDao();
+		String gmail = adminDataDao.getMail(location);
 		
 		if(result.equals("Exits")) {
 			int otp = GenerateOTP.generateRandomOTP();
@@ -39,12 +45,11 @@ public class AdminLoginServlet2 extends HttpServlet {
 	                + "If you did not request this, please ignore this email or contact support immediately.\n\n"
 	                + "Best Regards,\n"
 	                + "HAPPY' POINT\n"
-	                + "happymail18062022@gmail.com";
-								
+	                + "happymail18062022@gmail.com";								
 			
 			SendOTP mail = new SendOTP();
-	        boolean text =mail.sendEmail(username, content, subject, otp);
-			
+	        boolean text =mail.sendEmail(username, content, subject, otp, gmail);
+	        		
 	        if(text){
 	            session.setAttribute("adminlogin", admin);
 	            resp.sendRedirect("verification.jsp");

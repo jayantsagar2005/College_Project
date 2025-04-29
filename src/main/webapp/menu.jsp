@@ -23,7 +23,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -52,7 +51,11 @@
         	<div class="container-fluid position-relative p-0">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
 				    <a href="" class="navbar-brand p-0">
-				    	<h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>
+				    	<h1 class="text-primary m-2"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>	    	
+				    	<p id="branchName">
+						    <i class="fa-solid fa-location-dot mx-2"></i>
+						    <%= (String) session.getAttribute("location") != null ? session.getAttribute("location") : "Location not set" %>
+						</p>
 				    </a>
 				    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 				    	<span class="fa fa-bars"></span>
@@ -136,7 +139,7 @@
                             <div class="row g-4">   
                             <%
                             	AddItemDaoImp addItemDaoImp = new AddItemDaoImp();
-                            	ArrayList<ItemPojo> list = addItemDaoImp.getItem("Break Fast");
+                            	ArrayList<ItemPojo> list = addItemDaoImp.getItem("Breakfast", (String) session.getAttribute("location"));
                             	
                             	if(list.size() != 0){
                             		 for(int i=0; i<list.size(); i++){
@@ -167,7 +170,7 @@
                         <div id="tab-2" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <%       
-	                            	ArrayList<ItemPojo> list1 = addItemDaoImp.getItem("Lunch");                    	
+	                            	ArrayList<ItemPojo> list1 = addItemDaoImp.getItem("Lunch", (String) session.getAttribute("location"));                    	
 	                            	if(list1.size() != 0){
 	                            		 for(int i=0; i<list1.size(); i++){
 	                            %>			  
@@ -197,7 +200,7 @@
                         <div id="tab-3" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <%       
-	                            	ArrayList<ItemPojo> list2 = addItemDaoImp.getItem("Dinner");                    	
+	                            	ArrayList<ItemPojo> list2 = addItemDaoImp.getItem("Dinner", (String) session.getAttribute("location"));                    	
 	                            	if(list2.size() != 0){
 	                            		 for(int i=0; i<list2.size(); i++){
 	                            %>			  

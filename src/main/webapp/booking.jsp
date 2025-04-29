@@ -19,6 +19,8 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -30,6 +32,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -47,7 +50,11 @@
         	<div class="container-fluid position-relative p-0">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
 				    <a href="" class="navbar-brand p-0">
-				    	<h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>
+				    	<h1 class="text-primary m-2"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>	    	
+				    	<p id="branchName">
+						    <i class="fa-solid fa-location-dot mx-2"></i>
+						    <%= (String) session.getAttribute("location") != null ? session.getAttribute("location") : "Location not set" %>
+						</p>
 				    </a>
 				    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 				    	<span class="fa fa-bars"></span>
@@ -124,20 +131,18 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <select class="form-select" id="select1" name="peopleNo">
-                                          <option value="1">People 1</option>
-                                          <option value="2">People 2</option>
-                                          <option value="3">People 3</option>
-                                        </select>
-                                        <label for="select1">No Of People</label>
-                                      </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" name="request" placeholder="Special Request" id="message" style="height: 100px"></textarea>
-                                        <label for="message">Special Request</label>
+                                        <input type="number" class="form-control" name="tableno" id="tableno" placeholder="Our table number">
+                                        <label for="tableno">Table No.</label>
                                     </div>
                                 </div>
+                                <div class="col-12 text-center mt-2">
+								  <button type="button" onclick="storeSessionData()" class="btn btn-outline-primary mt-3">
+									  Choose Food
+								  </button>
+								  <!-- Hidden input for passing selected order -->
+								  <input type="hidden" name="foodOrder" id="foodOrderData">
+								</div>
+
                                 <%
                                 	String str = (String) session.getAttribute("msg");
                                     if(str != null){   		
@@ -146,9 +151,7 @@
                                 <%
                                     }
                                 %>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
-                                </div>
+                                
                             </div>
                         </form>
                     </div>
@@ -173,8 +176,12 @@
                 </div>
             </div>
         </div>
-        <!-- Reservation Start -->
+        <!-- Reservation end -->
         
+        <!-- choose food modal start  -->      	
+        	<%@ include file="itemmodal.jsp" %>
+        <!-- choose food modal end  -->
+             
 
         <!-- Footer Start -->
         	<%@include file="footer.jsp" %>
@@ -183,22 +190,22 @@
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    
-
+ 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	    <script src="lib/wow/wow.min.js"></script>
+	    <script src="lib/easing/easing.min.js"></script>
+	    <script src="lib/waypoints/waypoints.min.js"></script>
+	    <script src="lib/counterup/counterup.min.js"></script>
+	    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	    <script src="lib/tempusdominus/js/moment.min.js"></script>
+	    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+	    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    	<script src="js/main.js"></script>
+    	<script src="js/itemorder.js"></script>
 </body>
 
 </html>

@@ -104,7 +104,7 @@ public class FoodOrderDaoImp implements FoodOrderDao {
 		 	
 		return list;
 	}
-
+ 
 	@Override
 	public boolean updateStatus(int sNo) {
 		boolean flag = false;

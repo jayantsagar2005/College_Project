@@ -28,7 +28,7 @@ public class ContactServiceImp implements ContactService {
 	}
 	
 	@Override
-	public String contactService2(String name, String email, String subject, String message) {
+	public String contactService2(String name, String email, String subject, String message, String location) {
 		try {
 			String date = LocalDate.now().toString();
 			LocalTime now = LocalTime.now();
@@ -36,7 +36,7 @@ public class ContactServiceImp implements ContactService {
 	        String time = now.format(formatter);
 	        
 			ContactDaoImp contactDaoImp = new ContactDaoImp();
-			result = contactDaoImp.saveContact(name, email, subject, message, date+" "+time);
+			result = contactDaoImp.saveContact(name, email, subject, message, date+" "+time, location);
 			
 		} catch (Exception e) { 
 			result = "Service Error";
@@ -47,11 +47,11 @@ public class ContactServiceImp implements ContactService {
 	}
 
 	@Override
-	public ArrayList<ContactPojo> readContactService() {
+	public ArrayList<ContactPojo> readContactService(String location) {
 		ArrayList<ContactPojo> list = null;
 		try {
 			ContactDaoImp contactDaoImp = new ContactDaoImp();
-			list = contactDaoImp.readContact();
+			list = contactDaoImp.readContact(location);
 			return list; 
 		}catch (Exception e) {
 			e.printStackTrace();

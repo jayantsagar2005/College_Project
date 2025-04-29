@@ -2,7 +2,7 @@
 <%@page import="tech.happy.model.TeamPojo"%>
 <%@page import="tech.happy.dao.TeamDaoImp"%>
 <%@page import="tech.happy.dao.ContactDaoImp"%>
-<%@page import="tech.happy.dao.FoodOrderDaoImp"%>
+<%@page import="tech.happy.dao.OrderDao"%>
 <%@page import="tech.happy.model.Admin"%>
 
 <%
@@ -23,16 +23,26 @@
 		<meta charset="UTF-8">
 		<title>Update Memeber</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link href="css/admin.css" rel="stylesheet">
 	</head>
 	<body>
 	
-		<div class="back-colors py-4">
-			<div class="text-center">
-				<h1 class="fw-bolder font-color">UPDATE TEAM MEMBER</h1>
-		    	<h2><%@include file="message.jsp" %></h2>
-			</div>
-		</div>
+		<header class="back-colors py-4 d-flex justify-content-between align-items-center">
+		    <div class="text-center flex-grow-1">
+		        <h1 class="fw-bolder font-color m-0">UPDATE MEMBER</h1>           
+		        <h2 class="visually-hidden">
+		            <%@include file="message.jsp" %>             
+		        </h2>
+		    </div>
+		    
+		    <div class="text-end ms-auto">
+		        <h4 id="branchName" class="m-0 text-white me-4">
+		            <i class="fa-solid fa-location-dot mx-2"></i>
+		            <%= (String) session.getAttribute("location") != null ? session.getAttribute("location") : "Location not set" %>
+		        </h4>
+		    </div>
+		</header>
 	
 		<nav class="navbar navbar-expand-lg navbar-light back-colors mt-1">
 		  <div class="container-fluid">
@@ -47,17 +57,17 @@
 		        </li>
 		        <%
 		        	CommentDaoImp commentDaoImp = new CommentDaoImp();
-		        	FoodOrderDaoImp foodOrderDaoImp = new FoodOrderDaoImp();
-		        	int pendingOrder = foodOrderDaoImp.pendingOrder();
+		        	OrderDao foodOrderDaoImp = new OrderDao();
+		        	int pendingOrder = foodOrderDaoImp.pendingOrder((String) session.getAttribute("location"));
 		        %>
 		        <li class="nav-item">		
 		          <a class="nav-link fs-5 fw-bolder text-white" href="readorder.jsp">Read Ordered (<%= pendingOrder %>)</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link fs-5 fw-bolder text-white" href="ReadMessageServlet">Read Message (<%= contact.unreadCount() %>)</a>
+		          <a class="nav-link fs-5 fw-bolder text-white" href="ReadMessageServlet">Read Message (<%= contact.unreadCount((String) session.getAttribute("location")) %>)</a>
 		        </li>
 		        <li class="nav-item">		
-			       <a class="nav-link fs-5 fw-bolder text-white" href="readtestimonial.jsp">Read Testimonial (<%= commentDaoImp.pendingCount() %>)</a>
+			       <a class="nav-link fs-5 fw-bolder text-white" href="readtestimonial.jsp">Read Testimonial (<%= commentDaoImp.pendingCount((String) session.getAttribute("location")) %>)</a>
 			    </li>
 		        <li class="nav-item dropdown">
 			    	<a class="nav-link fs-5 dropdown-toggle fw-bolder text-warning" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,7 +75,7 @@
 				    </a>
 				    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 			        	<li><a class="dropdown-item fw-bolder" href="addservice.jsp">Add Service</a></li>
-			            <li><a class="dropdown-item fw-bolder" href="ReadServiceServlet">Read Services</a></li>
+			            <li><a class="dropdown-item fw-bolder" href="readservice.jsp">Read Services</a></li>
 			            <li><hr class="dropdown-divider"></li>
 			          	<li><a class="dropdown-item fw-bolder" href="additem.jsp">Add Food</a></li>
 			            <li><a class="dropdown-item fw-bolder" href="readitem.jsp">Read Foods</a></li>

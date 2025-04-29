@@ -28,8 +28,7 @@ public class AdminLoginDaoImp implements AdminLoginDao {
 		}catch (Exception e) {
 			result = "Failed";
 			e.printStackTrace();
-		}
-		
+		}	
 		
 		return result;
 	}

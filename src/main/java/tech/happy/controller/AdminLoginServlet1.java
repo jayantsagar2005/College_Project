@@ -23,7 +23,7 @@ public class AdminLoginServlet1 extends HttpServlet {
 		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-;
+
 		AdminLoginServiceImp adminLoginServiceImp = new AdminLoginServiceImp();
 		result =  adminLoginServiceImp.adminLoginService1(username, password); 
 		

@@ -1,3 +1,5 @@
+<%@page import="tech.happy.dao.AdminDataDao"%>
+
 		<div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">
                 <div class="row g-5">
@@ -5,15 +7,19 @@
                         <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Company</h4>
                         <a class="btn btn-link" href="about.jsp">About Us</a>
                         <a class="btn btn-link" href="contact.jsp">Contact Us</a>
-                        <a class="btn btn-link" href="booking.jsp">Reservation</a>
+                        <a class="btn btn-link" href="booking.jsp">Booking Order</a>
                         <a class="btn btn-link" href="#">Privacy Policy</a>
                         <a class="btn btn-link" href="#">Terms and Condition</a>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Kailsa Road, Amroha (244221)</p>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><%= (String) session.getAttribute("location") %></p>
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 98********</p>
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>happycoder2005@gmail.com</p>
+                        <%
+			          		AdminDataDao adminDataDao = new AdminDataDao();
+			          		String mail = adminDataDao.getMail((String) session.getAttribute("location"));
+			          	%>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i><%= mail %></p>
                         <div class="d-flex pt-2">
                             <a class="btn btn-outline-light btn-social" target="_blank" href="https://x.com/HappyCoder22?t=-VFPyhJfJo1P7EAQLbRoiQ&s=09"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-outline-light btn-social" target="_blank" href="facebook.com/happycoder22"><i class="fab fa-facebook-f"></i></a>

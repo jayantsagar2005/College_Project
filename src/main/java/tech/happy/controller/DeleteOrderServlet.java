@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import tech.happy.dao.FoodOrderDaoImp;
+import tech.happy.dao.OrderDao;
 
 import java.io.IOException;
 
@@ -18,9 +18,9 @@ public class DeleteOrderServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		int sno = Integer.parseInt(request.getParameter("sno"));
-		
-		FoodOrderDaoImp foodOrderDaoImp = new FoodOrderDaoImp();
-		boolean flag = foodOrderDaoImp.deleteOrder(sno);
+
+		OrderDao orderDao = new OrderDao();
+		boolean flag = orderDao.deleteOrder(sno);
 		
 		if(flag) {
 			String msg = "Delete Successfully!";

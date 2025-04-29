@@ -30,7 +30,7 @@ public class AddItemServiceImp implements AddItemService {
 	}
 
 	@Override
-	public boolean addItem(String dayTime, String itemName, String itemContent, int itemPrice, String itemImge) {
+	public boolean addItem(String dayTime, String itemName, String itemContent, int itemPrice, String itemImge, String location) {
 		
 		boolean result = false;
 		
@@ -43,7 +43,7 @@ public class AddItemServiceImp implements AddItemService {
 	        String dateTime = date+" "+time;
 	        
 	        AddItemDaoImp addItemDaoImp = new AddItemDaoImp();
-	        result = addItemDaoImp.addItem(dayTime, itemName, itemContent, itemPrice, itemImge, dateTime);
+	        result = addItemDaoImp.addItem(dayTime, itemName, itemContent, itemPrice, itemImge, dateTime, location);
 	        
 		} catch (Exception e) {
 			e.printStackTrace();

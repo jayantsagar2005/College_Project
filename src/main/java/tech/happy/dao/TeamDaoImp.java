@@ -4,22 +4,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
 import tech.happy.model.TeamPojo;
+
 
 public class TeamDaoImp implements TeamDao{
 
 	private Connection conn;
 	
 	@Override
-	public boolean addMember(TeamPojo team) {
+	public boolean addMember(TeamPojo team, String location) {
 		boolean result = false;
 		
 		try {
 			
 			conn = ConnectionFactory.getConnection();
-			
-			String query = "insert into team(MemberName, MemberDesignation, MemberImage, Facebook, Twitter, Instagram, DateTime) values (?, ?, ?, ?, ?, ?, ?)"; 
+						
+			String query = "insert into team(MemberName, MemberDesignation, MemberImage, Facebook, Twitter, Instagram, DateTime, Location) values (?, ?, ?, ?, ?, ?, ?, ?)"; 
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, team.getMemberName());
 			statement.setString(2, team.getMemberDesignation());
@@ -28,7 +28,8 @@ public class TeamDaoImp implements TeamDao{
 			statement.setString(5, team.getTwitter());
 			statement.setString(6, team.getInstagram());
 			statement.setString(7, team.getDateTime());
-			
+			statement.setString(8, location);
+						
 			int rowAffected = statement.executeUpdate();
 			
 			if(rowAffected > 0) {
@@ -53,18 +54,18 @@ public class TeamDaoImp implements TeamDao{
 	}
 
 	
-	@Override
-	public ArrayList<TeamPojo> fourMember() {
+	@Override 
+	public ArrayList<TeamPojo> fourMember(String location) {
 		
 		ArrayList<TeamPojo> list = new ArrayList<TeamPojo>(); 
 		
 		try {
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "select* from team";
+			String query = "select* from team where Location = ?";
 			
 			PreparedStatement statement = conn.prepareStatement(query);
-			
+			statement.setString(1, location);			
 			ResultSet resultSet = statement.executeQuery();
 			
 			int i = 0;
@@ -94,16 +95,17 @@ public class TeamDaoImp implements TeamDao{
 
 
 	@Override
-	public ArrayList<TeamPojo> getMember() {
+	public ArrayList<TeamPojo> getMember(String location) {
 		
 		ArrayList<TeamPojo> list = new ArrayList<TeamPojo>();  
 		
 		try {
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "select* from team";
+			String query = "select* from team where Location = ?";
 			
 			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setString(1, location); 
 			
 			ResultSet resultSet = statement.executeQuery();
 			

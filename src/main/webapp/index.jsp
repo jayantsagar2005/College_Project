@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <%@page import="tech.happy.model.CommentPojo"%>
 <%@page import="tech.happy.dao.CommentDaoImp"%>
 <%@page import="tech.happy.dao.ServiceDaoImp"%>
@@ -7,15 +6,14 @@
 <%@page import="tech.happy.model.ItemPojo"%>
 <%@page import="tech.happy.dao.TeamDaoImp"%>
 <%@page import="tech.happy.model.TeamPojo"%>
-<%@page import="java.util.ArrayList"%>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <title>Index</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="" name="keywords">
     <meta content="" name="description">
 	
@@ -31,6 +29,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">   
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -62,13 +63,11 @@
 		};
 	</script>
 	
-	
 	<%  
 		   return;
 		}
 		session.removeAttribute("check");
 	%>
-
 
     <div class="container-fluid bg-white p-0">
         <!-- Spinner Start -->
@@ -84,7 +83,11 @@
         	<div class="container-fluid position-relative p-0">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
 				    <a href="" class="navbar-brand p-0">
-				    	<h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>
+				    	<h1 class="text-primary mt-2 md-0"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>	    	
+						<div style="display: flex; align-items: center;" class="md-2">
+						    <i class="fa-solid fa-location-dot mx-2 mb-2"></i>
+						    <div id="locationDisplay" class="mb-2 fw-bolder"><%= (String) session.getAttribute("location") %></div>
+						</div>
 				    </a>
 				    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 				    	<span class="fa fa-bars"></span>
@@ -118,7 +121,7 @@
                             <a href="booking.jsp" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">Book A Table</a>
                         </div>
                         <div class="col-lg-6 text-center text-lg-end overflow-hidden">
-                            <img class="img-fluid rounded-circle" src="img/hero.png" alt="">
+                            <img class="img-fluid rounded-circle" src="img/roimg (1).png" alt="">
                         </div>
                     </div>
                 </div>
@@ -132,8 +135,8 @@
                 <div class="row g-4">
                 
                 	<%              	
-                		ServiceDaoImp service = new ServiceDaoImp();
-                		ArrayList<ServicePojo> listData = service.readFourService();             		
+                		ServiceDaoImp serviceDaoImp = new ServiceDaoImp();
+                		ArrayList<ServicePojo> listData = serviceDaoImp.readFourService((String) session.getAttribute("location"));             		
                 		if(listData.size() != 0){               			
                 			for(ServicePojo sp : listData){		
                 	%>   
@@ -158,7 +161,9 @@
             </div>
         </div>
         <!-- Service End -->
-		<a class="btn btn-primary  py-3 px-5 mt-2" href="service.jsp" style="margin-left:45%;">All Services</a>
+		<div class="text-center">
+			<a class="btn btn-primary  py-3 text-center mt-2" href="service.jsp">All Services</a>
+		</div>
 
         <!-- About Start -->
         <div class="container-xxl py-5">
@@ -167,16 +172,16 @@
                     <div class="col-lg-6">
                         <div class="row g-3">
                             <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="img/about-1.jpg">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="img/download (3).png">
                             </div>
                             <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="img/about-2.jpg" style="margin-top: 25%;">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="img/download (2).png" style="margin-top: 25%;">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="img/about-3.jpg">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="img/download (1).png">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="img/about-4.jpg">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="img/download (4).png">
                             </div>
                         </div>
                     </div>
@@ -256,7 +261,7 @@
                             <div class="row g-4">   
                             <%
                             	AddItemDaoImp addItemDaoImp = new AddItemDaoImp();
-                            	ArrayList<ItemPojo> list = addItemDaoImp.getItemTen("Break Fast");
+                            	ArrayList<ItemPojo> list = addItemDaoImp.getItemTen("Breakfast", (String) session.getAttribute("location"));
                             	
                             	if(list.size() != 0){
                             		 for(int i=0; i<list.size(); i++){
@@ -287,7 +292,7 @@
                         <div id="tab-2" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <%       
-	                            	ArrayList<ItemPojo> list1 = addItemDaoImp.getItemTen("Lunch");                    	
+	                            	ArrayList<ItemPojo> list1 = addItemDaoImp.getItemTen("Lunch", (String) session.getAttribute("location"));                    	
 	                            	if(list1.size() != 0){
 	                            		 for(int i=0; i<list1.size(); i++){
 	                            %>			  
@@ -317,7 +322,7 @@
                         <div id="tab-3" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <%       
-	                            	ArrayList<ItemPojo> list2 = addItemDaoImp.getItemTen("Dinner");                    	
+	                            	ArrayList<ItemPojo> list2 = addItemDaoImp.getItemTen("Dinner", (String) session.getAttribute("location"));                    	
 	                            	if(list2.size() != 0){
 	                            		 for(int i=0; i<list2.size(); i++){
 	                            %>			  
@@ -348,7 +353,10 @@
             </div>
         </div>
         <!-- Menu End -->
-		<a class="btn btn-primary  py-3 px-5 mt-2" href="menu.jsp" style="margin-left:45%;">All Items</a>
+        <div class="text-center">
+        	<a class="btn btn-primary py-3 text-center mt-2" href="menu.jsp">All Items</a>
+        </div>
+		
 
         <!-- Reservation Start -->
         <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
@@ -365,7 +373,7 @@
                     <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reservation</h5>
                         <h1 class="text-white mb-4">Book A Table Online</h1>
-                        <form action="FoodOrderServlet" method="post">
+                        <form action="FoodOrderServlet1" method="post">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
@@ -387,20 +395,18 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <select class="form-select" id="select1" name="peopleNo">
-                                          <option value="1">People 1</option>
-                                          <option value="2">People 2</option>
-                                          <option value="3">People 3</option>
-                                        </select>
-                                        <label for="select1">No Of People</label>
-                                      </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" name="request" placeholder="Special Request" id="message" style="height: 100px"></textarea>
-                                        <label for="message">Special Request</label>
+                                        <input type="number" class="form-control" name="tableno" id="tableno" placeholder="Our table number">
+                                        <label for="tableno">Table No.</label>
                                     </div>
                                 </div>
+                                <div class="col-12 text-center mt-2">
+								  <button type="button" onclick="storeSessionData()" class="btn btn-outline-primary mt-3">
+									  Choose Food
+								  </button>
+								  <!-- Hidden input for passing selected order -->
+								  <input type="hidden" name="foodOrder" id="foodOrderData">
+								</div>
+
                                 <%
                                 	String str = (String) session.getAttribute("msg");
                                     if(str != null){   		
@@ -409,9 +415,7 @@
                                 <%
                                     }
                                 %>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
-                                </div>
+                               
                             </div>
                         </form>
                     </div>
@@ -437,6 +441,10 @@
             </div>
         </div>
         <!-- Reservation Start -->
+        
+        <!-- choose food modal start  -->
+        	<%@ include file="itemmodal.jsp" %>
+        <!-- choose food modal end  -->
 
 
         <!-- Team Start -->
@@ -449,7 +457,7 @@
                 <div class="row g-4">
                 	<%
                 		TeamDaoImp dao = new TeamDaoImp();
-                		ArrayList<TeamPojo> teamList = dao.fourMember();
+                		ArrayList<TeamPojo> teamList = dao.fourMember((String) session.getAttribute("location"));
                 		if(teamList.size() != 0){
                 			for(int i=0; i<teamList.size(); i++){	
                 	%>
@@ -481,14 +489,17 @@
                 			}
                 		}else{
 	                %>
-	                		<h3>Present time not work any member</h3>
+	                		<h3 class="text-center">Present time not work any member</h3>
 	                <%
                 		}
 	                %>                  
                 </div>
             </div>
         </div>
-        <a class="btn btn-primary  py-3 px-5 mt-2" href="team.jsp" style="margin-left:42%;">All Master Chefs</a>
+        <div class="text-center">
+        	<a class="btn btn-primary py-3 mt-2 text-center" href="team.jsp">All Master Chefs</a>
+        </div>
+        
         <!-- Team End -->
 
 
@@ -502,7 +513,7 @@
                 <div class="owl-carousel testimonial-carousel">
                     <%
 	                	CommentDaoImp commentDaoImp = new CommentDaoImp();
-	                	ArrayList<CommentPojo> commentList = commentDaoImp.readCommentVerfied();
+	                	ArrayList<CommentPojo> commentList = commentDaoImp.readCommentVerfied((String) session.getAttribute("location"));
 	                	for(CommentPojo cp : commentList){
 	                %>
 	                		<div class="testimonial-item bg-transparent border rounded p-4">
@@ -522,13 +533,21 @@
                 </div>
             </div>
         </div>
-        <a class="btn btn-primary  py-3 px-5 mt-2" href="addtestimonial.jsp" style="margin-left:45%;">Add Testimonial</a>
+        <div class="text-center">
+        	<a class="btn btn-primary py-3 text-center mt-2" href="addtestimonial.jsp">Add Testimonial</a>
+        </div>
         <!-- Testimonial End -->
+        
         
 
         <!-- Footer Start -->
         	<%@include file="footer.jsp" %>
         <!-- Footer End -->
+        
+        <form id="geoForm" action="NearestLocationServlet" method="POST" style="display:none;">
+		    <input type="hidden" name="lat" id="latField">
+		    <input type="hidden" name="lng" id="lngField">
+		</form>
 
 
         <!-- Back to Top -->
@@ -549,6 +568,54 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/itemorder.js"></script>
+    
+    <script>
+	    if (!sessionStorage.getItem("geoFetched")) {
+	        navigator.geolocation.getCurrentPosition(function(position) {
+	            var lat = position.coords.latitude;
+	            var lng = position.coords.longitude;
+	
+	            console.log(lat);
+	            console.log(lng);
+	
+	            // Fill form fields
+	            document.getElementById("latField").value = lat;
+	            document.getElementById("lngField").value = lng;
+	
+	            // Mark location as fetched
+	            sessionStorage.setItem("geoFetched", "true");
+	
+	            // Submit form to servlet
+	            document.getElementById("geoForm").submit();
+	        }, function(error) {
+	            switch(error.code) {
+	                case error.PERMISSION_DENIED:
+	                    alert("Permission denied. Please allow location access.");
+	                    break;
+	                case error.POSITION_UNAVAILABLE:
+	                    alert("Location unavailable.");
+	                    break;
+	                case error.TIMEOUT:
+	                    alert("Location request timed out.");
+	                    break;
+	                default:
+	                    alert("An unknown error occurred.");
+	                    break;
+	            }
+	            console.error('Geolocation error:', error);
+	        });
+	    }
+	</script>
+	
+	<!-- <script>
+	    if (!sessionStorage.getItem("reloadedOnce")) {
+	        sessionStorage.setItem("reloadedOnce", "true");
+	        setTimeout(() => {
+	            location.reload();
+	        }, 1000);
+	    }
+	</script> -->
 </body>
 
 </html>

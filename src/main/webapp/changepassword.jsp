@@ -18,45 +18,44 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="css/admin.css" rel="stylesheet">
 </head>
-<body class="bg-secondary d-flex justify-content-center align-items-center mt-4">
-    <div>
-		<div style="width:25vw;" class="border mt-5 border-5 border-body shadow-lg p-3 mb-5 bg-body rounded-5">
-			<div>
-				<div class="text-center my-3">
-					<h2 class="fs-1 fw-bolder front-color">Change Password</h2>
-				</div>
-			</div>
-			<form action="ChangePasswordServlet1" method="post" class="mx-2">
-			
-			  <div class="my-4">
-			    <label for="username" class="form-label mx-2 fw-bolder">Username</label>
-			    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
-			  </div>
-			  
-			  <div class="my-4">
-			    <label for="password" class="form-label mx-2 fw-bolder">Current Password</label>
-			    <input type="password" class="form-control" id="password" name="oldpassword" placeholder="Enter your old password">
-			  </div>
-			  
-			  <div class="my-4">
-				<label for="pass" class="form-label mx-2 fw-bolder">New Password</label>
-				<input type="password" class="form-control" id="pass" name="newpassword" placeholder="Enter your new password" oninput="updateCounter('pass')"> <br>
-				<div class="span">
-					<span id="pass-counter" class="counter">0 characters</span>
-					<span id="pass-counter" class="counter">[0 to 16 characters]</span>
-				</div>
-			  </div>
-			  
-			  <div class="text-center">
-			  	<button type="submit" class="btn back-color my-1 fs-5 fw-bolder">Submit</button>
-			  </div> 
-			  <h3 style="text-align:center;"><%@include file="message.jsp" %></h3>
-			</form>
-		</div>
-		<div class="circle c1"></div>
-        <div class="circle c2"></div>
-	</div>
-    
+<body class="bg-secondary d-flex justify-content-center align-items-center min-vh-100 py-5">
+    <div class="container">
+        <div class="mx-auto shadow-lg p-4 bg-white border border-warning border-4 rounded-3" style="max-width: 400px;">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold font-color">Change Password</h2>
+            </div>
+
+            <form action="ChangePasswordServlet1" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label fw-bold">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-bold">Current Password</label>
+                    <input type="password" class="form-control" id="password" name="oldpassword" placeholder="Enter your current password" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pass" class="form-label fw-bold">New Password</label>
+                    <input type="password" class="form-control" id="pass" name="newpassword" placeholder="Enter your new password" oninput="updateCounter('pass')" maxlength="16" required>
+                    <div class="d-flex justify-content-between small text-muted mt-1">
+                        <span id="pass-counter">0 characters</span>
+                        <span>[0 to 16 characters]</span>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn back-color fw-bold px-4">Submit</button>
+                </div>
+
+                <div class="mt-3 text-center">
+                    <h6 class="text-danger"><%@include file="message.jsp" %></h6>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function updateCounter(inputId) {
             const inputElement = document.getElementById(inputId);
@@ -65,5 +64,7 @@
         }
     </script>
     
+    
 </body>
+
 </html>

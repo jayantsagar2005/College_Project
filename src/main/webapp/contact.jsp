@@ -1,3 +1,5 @@
+<%@page import="tech.happy.dao.AdminDataDao"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,6 +21,7 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -47,7 +50,11 @@
         	<div class="container-fluid position-relative p-0">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
 				    <a href="" class="navbar-brand p-0">
-				    	<h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>
+				    	<h1 class="text-primary m-2"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>	    	
+				    	<p id="branchName">
+						    <i class="fa-solid fa-location-dot mx-2"></i>
+						    <%= (String) session.getAttribute("location") != null ? session.getAttribute("location") : "Location not set" %>
+						</p>
 				    </a>
 				    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 				    	<span class="fa fa-bars"></span>
@@ -113,9 +120,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
-                        
-                       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3493.1543519574057!2d78.52506581116684!3d28.893761022067803!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390b0724531c7833%3A0x9f3d7640a9571127!2sthe%20black%20point%20restaurant%20and%20water%20park!5e0!3m2!1sen!2sin!4v1725632648684!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <%     
+	                    AdminDataDao adminDataDao1 = new AdminDataDao();
+	                    double[] points = adminDataDao1.getPoints((String) session.getAttribute("location"));
+	
+	                    /* String lat = (String) session.getAttribute("latitude");
+	                    String lng = (String) session.getAttribute("longitude"); */
+	                    
+	                    String lat = ""+points[0];
+	                    String lng = ""+points[1];
+	                    
+	                    // Default values if session attributes are not set
+	                    if (lat == null || lng == null) {
+	                        lat = "28.893761022067803"; 
+	                        lng = "78.52506581116684";
+	                    }
+						// api key = AIzaSyBnL9R4baZ0eU1AYdHA-2ek4uWNEhfzTms
+						String apiKey = "AIzaSyBnL9R4baZ0eU1AYdHA-2ek4uWNEhfzTms";
+	                    String embedUrl = "https://www.google.com/maps/embed/v1/view"
+				                            + "?key=" + apiKey
+				                            + "&center=" + lat + "," + lng
+				                            + "&zoom=15"
+				                            + "&maptype=roadmap";
+                    %>
+                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">                       
+                       <iframe width="600" height="450" frameborder="0" style="border:0"
+					        src="<%= embedUrl %>" allowfullscreen>
+					    </iframe>
                     </div>
                     <div class="col-md-6">
                         <div class="wow fadeInUp" data-wow-delay="0.2s">

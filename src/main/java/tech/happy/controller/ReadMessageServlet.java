@@ -19,10 +19,11 @@ public class ReadMessageServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ContactServiceImp contactServiceImp = new ContactServiceImp();
-		ArrayList<ContactPojo> list =  contactServiceImp.readContactService();
-		
 		HttpSession httpSession = request.getSession();
+		String location = (String) httpSession.getAttribute("location"); 
+		
+		ContactServiceImp contactServiceImp = new ContactServiceImp();
+		ArrayList<ContactPojo> list =  contactServiceImp.readContactService(location);	
 		
 		if(list == null) {
 			

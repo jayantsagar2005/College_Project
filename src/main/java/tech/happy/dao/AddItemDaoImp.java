@@ -15,12 +15,12 @@ public class AddItemDaoImp implements AddItemDao{
 	
 	@Override
 	public boolean addItem(String dayTime, String itemName, String itemContent, int itemPrice, String itemImage,
-			String dateTime) {
+			String dateTime, String location) { 
 		boolean result = false;
 		
 		try {
 			conn = ConnectionFactory.getConnection();
-			String query = "insert into items(ItemName, Itemcontent, ItemPrice, ItemImage, DayTime, DateTime) values (?, ?, ?, ?, ?, ?)";
+			String query = "insert into items(ItemName, Itemcontent, ItemPrice, ItemImage, DayTime, DateTime, Location) values (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pStatement = conn.prepareStatement(query);
 			pStatement.setString(1, itemName);
 			pStatement.setString(2, itemContent);
@@ -28,6 +28,7 @@ public class AddItemDaoImp implements AddItemDao{
 			pStatement.setString(4, itemImage);	
 			pStatement.setString(5, dayTime);
 			pStatement.setString(6, dateTime);
+			pStatement.setString(7, location);
 			
 			int rowAffected = pStatement.executeUpdate();
 			
@@ -53,14 +54,15 @@ public class AddItemDaoImp implements AddItemDao{
 	}
 
 	@Override
-	public ArrayList<ItemPojo> getItem(String time) {
+	public ArrayList<ItemPojo> getItem(String time, String location) {
 		ArrayList<ItemPojo> list = new ArrayList<ItemPojo>();
 		
 		try {
 			conn = ConnectionFactory.getConnection();
-			String query = "select* from items where DayTime = ?";
+			String query = "select* from items where DayTime = ? and Location = ?";
 			PreparedStatement pStatement = conn.prepareStatement(query);
 			pStatement.setString(1, time);
+			pStatement.setString(2, location);
 			
 			ResultSet resultSet = pStatement.executeQuery();
 			
@@ -86,15 +88,16 @@ public class AddItemDaoImp implements AddItemDao{
 	}
 
 	@Override
-	public ArrayList<ItemPojo> getItemTen(String time) {
+	public ArrayList<ItemPojo> getItemTen(String time, String location) {
 		
 		ArrayList<ItemPojo> list = new ArrayList<ItemPojo>();
 			
 			try {
 				conn = ConnectionFactory.getConnection();
-				String query = "select* from items where DayTime = ?";
+				String query = "select* from items where DayTime = ? and Location = ?";
 				PreparedStatement pStatement = conn.prepareStatement(query);
 				pStatement.setString(1, time);
+				pStatement.setString(2, location);
 				
 				ResultSet resultSet = pStatement.executeQuery();
 				
@@ -122,14 +125,14 @@ public class AddItemDaoImp implements AddItemDao{
 			return list;
 	}
 	
-	public ArrayList<ItemPojo> getItem() {
+	public ArrayList<ItemPojo> getItem(String location) { 
 		ArrayList<ItemPojo> list = new ArrayList<ItemPojo>();
 		
 		try {
 			conn = ConnectionFactory.getConnection();
-			String query = "select* from items";
+			String query = "select* from items where location = ?";
 			PreparedStatement pStatement = conn.prepareStatement(query);
-			
+			pStatement.setString(1, location);
 			ResultSet resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {

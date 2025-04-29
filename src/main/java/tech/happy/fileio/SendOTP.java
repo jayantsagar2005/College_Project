@@ -7,14 +7,13 @@ import java.util.Properties;
 
 public class SendOTP {
 	
-	public boolean sendEmail(String username, String content, String subject, int otp) {
+	public boolean sendEmail(String username, String content, String subject, int otp, String mail) {
 		boolean test = false;
 		
 		String fromEmail = "happymail18062022@gmail.com"; 
 		String password = "sueb pwbi ljzh spxh"; 
-		String toEmail = "jayantsagar2005@gmail.com"; 
-		 
-		try{
+		  
+		try{			
 			Properties properties = new Properties();
 
 	        properties.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -33,14 +32,14 @@ public class SendOTP {
 
 	        Message message = new MimeMessage(session);
 
-	        message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+	        message.setRecipient(Message.RecipientType.TO, new InternetAddress(mail));
 	        message.setFrom(new InternetAddress(fromEmail));
 	        message.setSubject(subject);
 	        message.setText(content);
 	        
 	        Transport.send(message);
 	        test = true;
-
+	        
 		}catch (Exception e){
 	        e.printStackTrace();
 	    }

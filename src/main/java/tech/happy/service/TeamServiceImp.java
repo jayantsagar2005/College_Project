@@ -25,7 +25,7 @@ public class TeamServiceImp implements TeamService{
 	}
 
 	@Override
-	public boolean addMember(TeamPojo data) {
+	public boolean addMember(TeamPojo data, String location) {
 		boolean flag = false;
 		
 		try {
@@ -39,7 +39,7 @@ public class TeamServiceImp implements TeamService{
 	        data.setDateTime(dateTime);
 	        
 	        TeamDaoImp teamDaoImp = new TeamDaoImp();
-	        flag = teamDaoImp.addMember(data);
+	        flag = teamDaoImp.addMember(data, location);
 	                
 		}catch (Exception e) {
 			e.printStackTrace();

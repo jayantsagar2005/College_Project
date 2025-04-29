@@ -12,7 +12,7 @@ public class CommentDaoImp implements CommentDao {
 	private Connection conn;
 	
 	@Override
-	public boolean addComment(CommentPojo data) {
+	public boolean addComment(CommentPojo data, String location) {
 		
 		boolean result = false;
 		
@@ -21,13 +21,14 @@ public class CommentDaoImp implements CommentDao {
 			
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "insert into comment(Name, Occupation, Comment, DateTime, Image) values (?, ?, ?, ?, ?)"; 
+			String query = "insert into comment(Name, Occupation, Comment, DateTime, Image, Location) values (?, ?, ?, ?, ?, ?)"; 
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, data.getName());
 			statement.setString(2, data.getOccupation());
 			statement.setString(3, data.getComment());
 			statement.setString(4, data.getDateTime());
 			statement.setString(5, data.getImage());
+			statement.setString(6, location);
 			
 			int rowAffected = statement.executeUpdate();
 			
@@ -49,15 +50,16 @@ public class CommentDaoImp implements CommentDao {
 	}
 
 	@Override
-	public ArrayList<CommentPojo> readComment() {
+	public ArrayList<CommentPojo> readComment(String location) {
 		
 		ArrayList<CommentPojo> list = new ArrayList<>();
 		
 		 try {
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "select* from comment order by SNo desc"; 
+			String query = "select* from comment where Location = ? order by SNo desc"; 
 			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setString(1, location);
 			ResultSet resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -80,15 +82,16 @@ public class CommentDaoImp implements CommentDao {
 	}
 
 	@Override
-	public int pendingCount() {
+	public int pendingCount(String location) {
 		int n = 0;
 		
 		try {
 			conn = ConnectionFactory.getConnection();
-			String query = "SELECT COUNT(*) as n FROM comment WHERE Verified = ?";
+			String query = "SELECT COUNT(*) as n FROM comment WHERE Verified = ? and Location = ?";
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, "Pending");
-			ResultSet resultSet = statement.executeQuery();
+			statement.setString(2, location);
+			ResultSet resultSet = statement.executeQuery(); 
 			
 			if(resultSet.next()) {
 				n = resultSet.getInt("n");
@@ -142,16 +145,17 @@ public class CommentDaoImp implements CommentDao {
 	}
 
 	@Override
-	public ArrayList<CommentPojo> readCommentVerfied() {
+	public ArrayList<CommentPojo> readCommentVerfied(String location) {
 		
 		ArrayList<CommentPojo> list = new ArrayList<>();
 		
 		 try {
 			conn = ConnectionFactory.getConnection();
 			
-			String query = "select* from comment where Verified = ?";  
+			String query = "select* from comment where Verified = ? and Location = ?";  
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, "Verified");
+			statement.setString(2, location);
 			ResultSet resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {

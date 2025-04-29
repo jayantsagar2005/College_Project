@@ -1,7 +1,9 @@
-<!DOCTYPE html>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="tech.happy.model.ServicePojo"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="tech.happy.dao.ServiceDaoImp"%>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -22,6 +24,7 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -74,7 +77,11 @@
         	<div class="container-fluid position-relative p-0">
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
 				    <a href="" class="navbar-brand p-0">
-				    	<h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>
+				    	<h1 class="text-primary m-2"><i class="fa fa-utensils me-3"></i>HAPPY' POINT</h1>	    	
+				    	<p id="branchName">
+						    <i class="fa-solid fa-location-dot mx-2"></i>
+						    <%= (String) session.getAttribute("location") != null ? session.getAttribute("location") : "Location not set" %>
+						</p>
 				    </a>
 				    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 				    	<span class="fa fa-bars"></span>
@@ -125,11 +132,13 @@
                 <div class="row g-4">                	
                 	<%
                 		String msg = (String) session.getAttribute("msg");
-                		if(msg == null){               		
-                			ArrayList<ServicePojo> list = (ArrayList<ServicePojo>) session.getAttribute("servicedata");                 	
+                		if(msg == null){ 
+                			ServiceDaoImp serviceDaoImp = new ServiceDaoImp();
+                			ArrayList<ServicePojo> list = serviceDaoImp.readService((String) session.getAttribute("location"));                 	
+                			int index = 0;
                 			for(ServicePojo sp : list){              			
-                	%>   
-		                    	<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                	%>                   	
+                				<div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
 		                        	<div class="service-item rounded pt-3">
 		                            	<div class="p-4">
 		                                	<i class="fa fa-3x <%= sp.getIconName() %> text-primary mb-4"></i>
@@ -137,7 +146,7 @@
 		                                	<p><%= sp.getDescription() %></p>
 		                            	</div>
 		                        	</div>
-		                    	</div>       
+		                    	</div>		                    	       
                     <%
                 			}
                 		}else{
@@ -150,6 +159,8 @@
             </div>
         </div>
         <!-- Service End -->
+        
+        						
         
 
         <!-- Footer Start -->

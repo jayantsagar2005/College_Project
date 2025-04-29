@@ -5,9 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import tech.happy.dao.CommentDaoImp;
-import tech.happy.dao.FoodOrderDaoImp;
 
 import java.io.IOException;
 
@@ -23,6 +21,8 @@ public class UpdateCommentServlet extends HttpServlet {
 		
 		CommentDaoImp commentDaoImp = new CommentDaoImp();
 		boolean flag = commentDaoImp.updateStatus(sno); 
+		
+		// System.out.println(flag);
 		
 		response.sendRedirect("readtestimonial.jsp");
 		

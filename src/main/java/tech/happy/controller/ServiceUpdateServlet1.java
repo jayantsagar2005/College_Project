@@ -25,10 +25,9 @@ public class ServiceUpdateServlet1 extends HttpServlet {
 			int index = Integer.parseInt(request.getParameter("sn"));
 			httpSession.setAttribute("sn", index);
 			
-			String icon = request.getParameter("icon");
+			String icon = request.getParameter("iconname");
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");
-			
 			
 			ServiceModuleServiceImp serviceImp = new ServiceModuleServiceImp();
 			result = serviceImp.validationService(icon, title, description);
